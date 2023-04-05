@@ -1,2 +1,2 @@
 # Binary Searcher 
-A console binary searcher with Unit Tests. 
+A console binary searcher using generics with Unit Tests. 
