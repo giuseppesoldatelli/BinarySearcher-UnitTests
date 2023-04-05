@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,30 +9,27 @@ namespace BinarySearcher
 {
 	public class BinarySearcher
 	{
-		private readonly List<int> _list;
-		private readonly int _item;
-			
-		public BinarySearcher(List<int> list, int item)
+		public int Search<T>(List<T> list, T item) where T : IComparable
 		{
-			_list = list;
-			_item = item;
-		}
+			if ((list == null) || (list.Count == 0)) 
+			{
+				return -1;
+			}	
 
-		public static int Searcher(List<int> list, int item)
-		{
 			int min = 0;
 			int max = list.Count - 1;			
 
 			while (min <= max)
 			{
 				int mid = (max + min) / 2;
+				T itemMid = list.ElementAt(mid);
+				var comparison = item.CompareTo(itemMid);
 
-				if (list[mid] == item)
-				{
-					mid = item;
+				if (comparison == 0)
+				{					
 					return mid;
 				}
-				if (list[mid] > item)
+				if (comparison < 0)
 				{
 					max = mid - 1;
 				}

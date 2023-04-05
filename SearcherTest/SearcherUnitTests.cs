@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using static BinarySearcher.BinarySearcher;
+using System.Linq;
 
 namespace SearcherTest
 {
@@ -9,33 +9,60 @@ namespace SearcherTest
 	public class SearcherUnitTests
 	{
 		[TestMethod]
-		public void EsperadoEncontrarNoveNoSearcher()
+		public void EsperadoEncontrarNoveNaPosicaoTres()
 		{
-			List<int> list = new List<int>() { 3, 5, 7, 9, 11 };
-			int item = 9;		
+			List<uint> list = new List<uint>() { 3, 5, 7, 9, 11 };
+			uint item = 9;
 
-			if (Searcher(list, item) != 9)
-				throw new ArgumentException("Esperado encontrar nove.");
+			var searcher = new BinarySearcher.BinarySearcher();
+
+			if (searcher.Search(list, item) != list.IndexOf(item))
+				throw new ArgumentException("Esperado encontrar o nove na posição 3.");
 		}
 
 		[TestMethod]
-		public void EsperadoEncontrarDoisNoSearcher()
+		public void EsperadoEncontrarDoisNaPosicaoUm()
 		{
 			List<int> list = new List<int>() { 1, 2, 3, 4, 5, 6, 7 };
 			int item = 2;
 
-			if (Searcher(list, item) != 2)
-				throw new ArgumentException("Esperado encontrar dois.");
+			var searcher = new BinarySearcher.BinarySearcher();
+
+			if (searcher.Search(list, item) != list.IndexOf(item))
+				throw new ArgumentException("Esperado encontrar dois na posição 1.");
 		}
 
 		[TestMethod]
 		public void EsperadoNaoEncontrarOItemNaLista()
 		{
-			List<int> list = new List<int>() { 1, 2, 5, 9, 11, 17, 33 };
+			List<long> list = new List<long>() { 1, 2, 5, 9, 11, 17, 33 };
+			long item = 13;
+
+			var searcher = new BinarySearcher.BinarySearcher();
+
+			if (searcher.Search(list, item) != -1)
+				throw new ArgumentException("O número 13 não pertence a lista proposta.");
+		}
+
+		[TestMethod]
+		public void ListaVaziaDeveRetornarMenosUm()
+		{
+			var searcher = new BinarySearcher.BinarySearcher();
+
+			if (searcher.Search(null, 13) != -1)
+				throw new ArgumentException("");
+		}
+
+		[TestMethod]
+		public void ListaSemNumerosDeveRetornarMenosUm()
+		{
+			List<int> list = new List<int>() { };
 			int item = 13;
 
-			if (Searcher(list, item) != -1)
-				throw new ArgumentException("O número 13 não pertence a lista proposta.");
+			var searcher = new BinarySearcher.BinarySearcher();
+
+			if (searcher.Search(list, item) != -1)
+				throw new ArgumentException("A lista está vazia.");
 		}
 	}
 }
